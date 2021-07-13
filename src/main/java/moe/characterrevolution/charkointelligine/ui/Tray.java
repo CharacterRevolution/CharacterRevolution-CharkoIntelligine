@@ -1,6 +1,6 @@
-package com.billyang.entrylib.ui;
+package moe.characterrevolution.charkointelligine.ui;
 
-import com.billyang.entrylib.EntryLib;
+import moe.characterrevolution.charkointelligine.CharkoIntelligine;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -17,7 +17,7 @@ import java.io.InputStream;
  */
 public class Tray {
 
-    EntryLib entrylib;
+    CharkoIntelligine entrylib;
     private TrayIcon tray = null;
     FloatingWindow fw = null;
 
@@ -26,7 +26,7 @@ public class Tray {
      * @param entrylib 传递主类提供资源信息
      * @see FloatingWindow
      */
-    public void create(EntryLib entrylib) {
+    public void create(CharkoIntelligine entrylib) {
         this.entrylib = entrylib;
 
         fw = new FloatingWindow(entrylib);

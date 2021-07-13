@@ -1,7 +1,7 @@
-package com.billyang.entrylib.ui;
+package moe.characterrevolution.charkointelligine.ui;
 
-import com.billyang.entrylib.Config.UserIO;
-import com.billyang.entrylib.EntryLib;
+import moe.characterrevolution.charkointelligine.Config.UserIO;
+import moe.characterrevolution.charkointelligine.CharkoIntelligine;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -44,7 +44,7 @@ class DigitOnlyKeyListener implements KeyListener {
  */
 public class FloatingWindow extends JFrame {
 
-    EntryLib entrylib;
+    CharkoIntelligine entrylib;
     UserIO uio;
 
     JTabbedPane tabbedPane = new JTabbedPane();
@@ -93,7 +93,7 @@ public class FloatingWindow extends JFrame {
      * @param entrylib 传递主类提供资源信息
      * @see Tray
      */
-    public FloatingWindow(EntryLib entrylib) {
+    public FloatingWindow(CharkoIntelligine entrylib) {
         this.entrylib = entrylib;
         uio = entrylib.uio;
 

@@ -1,4 +1,4 @@
-package com.billyang.entrylib.Database;
+package moe.characterrevolution.charkointelligine.Database;
 
 import java.io.File;
 import java.sql.*;

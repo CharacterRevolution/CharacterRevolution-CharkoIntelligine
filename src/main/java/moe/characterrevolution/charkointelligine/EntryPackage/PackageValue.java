@@ -1,7 +1,7 @@
-package com.billyang.entrylib.EntryPackage;
+package moe.characterrevolution.charkointelligine.EntryPackage;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import com.billyang.entrylib.Database.QueryValue;
+import moe.characterrevolution.charkointelligine.Database.QueryValue;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.billyang.entrylib.Database;
+package moe.characterrevolution.charkointelligine.Database;
 
 import com.alibaba.fastjson.annotation.JSONField;
 

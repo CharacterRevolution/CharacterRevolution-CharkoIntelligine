@@ -1,4 +1,4 @@
-package com.billyang.entrylib.Config;
+package moe.characterrevolution.charkointelligine.Config;
 
 import com.alibaba.fastjson.JSONObject;
 

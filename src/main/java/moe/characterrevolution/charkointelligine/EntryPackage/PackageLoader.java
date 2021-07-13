@@ -1,12 +1,11 @@
-package com.billyang.entrylib.EntryPackage;
+package moe.characterrevolution.charkointelligine.EntryPackage;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
-import com.billyang.entrylib.*;
-import com.billyang.entrylib.Config.UserIO;
-import com.billyang.entrylib.Database.*;
-import com.billyang.entrylib.Matcher.MatchLoader;
-import com.billyang.entrylib.Matcher.MatchValue;
+import moe.characterrevolution.charkointelligine.Config.UserIO;
+import moe.characterrevolution.charkointelligine.Database.*;
+import moe.characterrevolution.charkointelligine.Matcher.MatchLoader;
+import moe.characterrevolution.charkointelligine.Matcher.MatchValue;
 
 import java.io.File;
 import java.util.ArrayList;

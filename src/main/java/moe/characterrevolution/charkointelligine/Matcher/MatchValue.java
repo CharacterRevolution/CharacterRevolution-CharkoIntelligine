@@ -1,4 +1,4 @@
-package com.billyang.entrylib.Matcher;
+package moe.characterrevolution.charkointelligine.Matcher;
 
 /**
  * MatchValue 类

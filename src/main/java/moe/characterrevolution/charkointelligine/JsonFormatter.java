@@ -1,4 +1,4 @@
-package com.billyang.entrylib;
+package moe.characterrevolution.charkointelligine;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

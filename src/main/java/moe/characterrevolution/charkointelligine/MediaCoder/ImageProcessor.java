@@ -1,6 +1,6 @@
-package com.billyang.entrylib.MediaCoder;
+package moe.characterrevolution.charkointelligine.MediaCoder;
 
-import com.billyang.entrylib.Config.UserIO;
+import moe.characterrevolution.charkointelligine.Config.UserIO;
 import net.mamoe.mirai.contact.Contact;
 import net.mamoe.mirai.event.events.GroupMessageEvent;
 import net.mamoe.mirai.message.data.*;

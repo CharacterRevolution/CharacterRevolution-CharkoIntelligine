@@ -1,4 +1,4 @@
-package com.billyang.entrylib.Matcher;
+package moe.characterrevolution.charkointelligine.Matcher;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

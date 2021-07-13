@@ -1,15 +1,15 @@
-package com.billyang.entrylib;
+package moe.characterrevolution.charkointelligine;
 
-import com.billyang.entrylib.Config.EnableGroups;
-import com.billyang.entrylib.Config.UserIO;
-import com.billyang.entrylib.Database.Database;
-import com.billyang.entrylib.Database.QueryValue;
-import com.billyang.entrylib.Matcher.MatchLoader;
-import com.billyang.entrylib.Matcher.MatchValue;
-import com.billyang.entrylib.Matcher.RegularReplace;
-import com.billyang.entrylib.MediaCoder.ImageProcessor;
-import com.billyang.entrylib.ui.Tray;
-import com.billyang.entrylib.EntryPackage.PackageLoader;
+import moe.characterrevolution.charkointelligine.Config.EnableGroups;
+import moe.characterrevolution.charkointelligine.Config.UserIO;
+import moe.characterrevolution.charkointelligine.Database.Database;
+import moe.characterrevolution.charkointelligine.Database.QueryValue;
+import moe.characterrevolution.charkointelligine.Matcher.MatchLoader;
+import moe.characterrevolution.charkointelligine.Matcher.MatchValue;
+import moe.characterrevolution.charkointelligine.Matcher.RegularReplace;
+import moe.characterrevolution.charkointelligine.MediaCoder.ImageProcessor;
+import moe.characterrevolution.charkointelligine.ui.Tray;
+import moe.characterrevolution.charkointelligine.EntryPackage.PackageLoader;
 import net.mamoe.mirai.console.plugin.jvm.JavaPlugin;
 import net.mamoe.mirai.console.plugin.jvm.JvmPluginDescriptionBuilder;
 import net.mamoe.mirai.contact.MemberPermission;
@@ -22,15 +22,15 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * 主类 EntryLib
+ * 主类 CharkoIntelligine
  * 提供 Mirai 框架通信以及消息交互
  * @author Bill Yang
  */
-public final class EntryLib extends JavaPlugin {
-    public static final EntryLib INSTANCE = new EntryLib();
-    private EntryLib() {
-        super(new JvmPluginDescriptionBuilder("EntryLib", "1.0.2")
-                .id("com.billyang.entrylib")
+public final class CharkoIntelligine extends JavaPlugin {
+    public static final CharkoIntelligine INSTANCE = new CharkoIntelligine();
+    private CharkoIntelligine() {
+        super(new JvmPluginDescriptionBuilder("CharkoIntelligine", "1.0.2")
+                .id("moe.characterrevolution.charkointelligine")
                 .info("Ask and replay plugin for Mirai-Console")
                 .author("Bill Yang")
                 .build());

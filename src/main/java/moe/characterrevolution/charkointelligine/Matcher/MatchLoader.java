@@ -1,6 +1,6 @@
-package com.billyang.entrylib.Matcher;
+package moe.characterrevolution.charkointelligine.Matcher;
 
-import com.billyang.entrylib.Database.Database;
+import moe.characterrevolution.charkointelligine.Database.Database;
 
 import java.sql.*;
 import java.util.ArrayList;

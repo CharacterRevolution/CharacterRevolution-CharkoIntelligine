@@ -1,6 +1,6 @@
-package com.billyang.entrylib;
+package moe.characterrevolution.charkointelligine;
 
-import com.billyang.entrylib.Config.UserIO;
+import moe.characterrevolution.charkointelligine.Config.UserIO;
 
 /**
  * Security 类

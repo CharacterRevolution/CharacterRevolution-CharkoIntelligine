@@ -1,12 +1,8 @@
-# EntryLib
+# CharkoIntelligine
+
+CharkoIntelligine 继承自 [EntryLib](https://github.com/BillYang2016/entrylib) 1.0.2 版本。  
 
 EntryLib 是一个基于 [Mirai-Console](https://github.com/mamoe/mirai-console) 的插件，用于实现群词条、自定义回复或更多功能。
-
-![version](https://img.shields.io/badge/%E5%BD%93%E5%89%8D%E7%89%88%E6%9C%AC-v1.0.2-informational)
-
-![GitHub issues](https://img.shields.io/github/issues/BillYang2016/entrylib)
-![GitHub stars](https://img.shields.io/github/stars/BillYang2016/entrylib)
-![GitHub downloads](https://img.shields.io/github/downloads/BillYang2016/entrylib/total)
 
 # 目录
 - [声明](#声明)
@@ -19,12 +15,6 @@ EntryLib 是一个基于 [Mirai-Console](https://github.com/mamoe/mirai-console)
 - [To-Do List](#to-do-list)
 - [插件依赖](#插件依赖)
 
-# 声明
-- 本插件仅作为学习交流等使用，请勿用于盈利，否则法律后果自负。
-- [欢迎加入~~原神~~交流群：735209171](https://jq.qq.com/?_wv=1027&k=5cV7uEJ)
-- 如果在使用插件过程中遇到任何问题，请发送 [Issues](https://github.com/BillYang2016/entrylib/issues) 询问
-- 插件开发初期，有许多期待完善之处，欢迎提交代码风格相似的 [PR](https://github.com/BillYang2016/entrylib/pulls)
-
 ## 可用console版本
 
 - 0.5.2
@@ -34,7 +24,7 @@ EntryLib 是一个基于 [Mirai-Console](https://github.com/mamoe/mirai-console)
 
 # 使用方法
 1. 请在 [Mirai-Console](https://github.com/mamoe/mirai-console) 框架下使用本插件
-2. 从 [Release](https://github.com/BillYang2016/entrylib/releases) 下载最新版jar
+2. 从 [Release](https://github.com/BillYang2016/charkointelligine/releases) 下载最新版jar
 3. 放置在 Mirai 目录的 plugins 文件夹下
 4. [下载并安装](https://www.runoob.com/sqlite/sqlite-installation.html) [Sqlite3](https://www.sqlite.org/download.html) ，添加至环境变量
 5. 运行 Mirai 并登录机器人
@@ -104,7 +94,7 @@ EntryLib 是一个基于 [Mirai-Console](https://github.com/mamoe/mirai-console)
 6. 删除命令的默认权限为管理员以上才可使用，因为不同于更新为空，一旦词条被删除，它的所有历史备份均被删除，且不会再出现在搜索结果中
 
 # 配置项
-配置项位于`Mirai\data\EntryLib\`文件夹中
+配置项位于`Mirai\data\charkointelligine\`文件夹中
 
 ## `global.json`
 本配置项提供对插件全局的控制，包含以下项目：
@@ -121,13 +111,13 @@ EntryLib 是一个基于 [Mirai-Console](https://github.com/mamoe/mirai-console)
 本配置项提供用户键入指令的配置  
 实质为键值对，键为用户输入，值为指令识别参数，请对照[基本指令列表](#基本指令列表)进行查看  
 可以增加新的键值对来提供新的指令  
-默认内容请查看[这里](https://github.com/BillYang2016/entrylib/blob/main/src/main/resources/input.json)
+默认内容请查看[这里](https://github.com/BillYang2016/charkointelligine/blob/main/src/main/resources/input.json)
 
 ## `output.json`
 本配置项提供插件回复项的配置  
 实质为键值对，键为条件状况，值为实际回复项  
 可以修改键值对来获得不同插件回复，但请勿增加或删除任意配置项  
-默认内容请查看[这里](https://github.com/BillYang2016/entrylib/blob/main/src/main/resources/output.json)  
+默认内容请查看[这里](https://github.com/BillYang2016/charkointelligine/blob/main/src/main/resources/output.json)  
 下面是一些参数解释：
 1. "learn"中`$1`表示词条名
 2. "view"中`$1`表示词条名，`$2`表示词条内容
@@ -142,7 +132,7 @@ EntryLib 是一个基于 [Mirai-Console](https://github.com/mamoe/mirai-console)
 - 词条库导入导出
 
 ## 词条库导入导出
-导入导出会根据一个 json 文件进行，这个文件的格式样例可以参考[这里](https://github.com/BillYang2016/entrylib/blob/main/src/main/resources/datapackage-template.json)  
+导入导出会根据一个 json 文件进行，这个文件的格式样例可以参考[这里](https://github.com/BillYang2016/charkointelligine/blob/main/src/main/resources/datapackage-template.json)  
 导出时将会生成上述格式的 json 文件  
 导入时需要提供上述格式的 json 文件，同时可以选择三种覆盖方式：
 1. 不覆盖相同词条

@@ -1,7 +1,7 @@
-package com.billyang.entrylib.Config;
+package moe.characterrevolution.charkointelligine.Config;
 
 import com.alibaba.fastjson.JSONObject;
-import com.billyang.entrylib.JsonFormatter;
+import moe.characterrevolution.charkointelligine.JsonFormatter;
 import net.mamoe.mirai.console.plugin.jvm.JavaPlugin;
 import net.mamoe.mirai.event.events.GroupMessageEvent;
 import net.mamoe.mirai.message.data.*;
