@@ -162,6 +162,13 @@ public class UserIO {
     public boolean getViewMode() {return getGlobalConfig("view-mode").equals("1");}
 
     /**
+     * 获取随机版本回复模式
+     * @return 是否随机版本回复
+     * @see #getGlobalConfig(String)
+     */
+    public boolean getRandomReply() {return getGlobalConfig("random-reply").equals("1");}
+
+    /**
      * 获取默认开关
      * @return 默认开关
      * @see #getGlobalConfig(String)
@@ -222,7 +229,7 @@ public class UserIO {
      * @return 图片缓存方式
      * @see #getGlobalConfig(String)
      */
-    public boolean getDownloadMode() {return getGlobalConfig("download-image").equals("1");}
+    public boolean getImageDownloadMode() {return getGlobalConfig("download-image").equals("1");}
 
     /**
      * 获取历史命令最多回复项数

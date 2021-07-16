@@ -29,7 +29,7 @@ import java.util.List;
 public final class CharkoIntelligine extends JavaPlugin {
     public static final CharkoIntelligine INSTANCE = new CharkoIntelligine();
     private CharkoIntelligine() {
-        super(new JvmPluginDescriptionBuilder("CharkoIntelligine", "1.0.2")
+        super(new JvmPluginDescriptionBuilder("CharkoIntelligine", "1.0.3")
                 .id("moe.characterrevolution.charkointelligine")
                 .info("Ask and replay plugin for Mirai-Console")
                 .author("Bill Yang")
@@ -107,7 +107,7 @@ public final class CharkoIntelligine extends JavaPlugin {
      * @param cancelError 是否取消错误反馈
      * @see #sendGroupMessage(GroupMessageEvent, String, String, String...)
      * @see MatchLoader#match(long, String) 
-     * @see Database#query(long, int, StringBuilder)
+     * @see Database#query(long, int, boolean, StringBuilder)
      */
     void processView(GroupMessageEvent g, String title, boolean cancelError) {
         if(!Security.checkTitle(uio, title)) {
@@ -128,7 +128,7 @@ public final class CharkoIntelligine extends JavaPlugin {
             if(!cancelError) sendGroupMessage(g,"view", "exist", title);
         } else {
             StringBuilder ErrorInfo = new StringBuilder(); //错误信息
-            String content = db.query(g.getGroup().getId(), id, ErrorInfo);
+            String content = db.query(g.getGroup().getId(), id, uio.getRandomReply(), ErrorInfo);
 
             if(content == null) {
                 if(!cancelError) {
