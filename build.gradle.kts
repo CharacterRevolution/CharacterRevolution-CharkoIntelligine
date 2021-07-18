@@ -5,8 +5,8 @@ plugins {
     id("net.mamoe.mirai-console") version "2.6.7"
 }
 
-group = "com.billyang"
-version = "1.0.3"
+group = "moe.characterrevolution"
+version = "1.0.4"
 
 repositories {
     maven{ url =uri("https://maven.aliyun.com/nexus/content/groups/public/")}

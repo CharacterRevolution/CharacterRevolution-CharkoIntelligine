@@ -8,6 +8,7 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
@@ -115,6 +116,7 @@ public class FloatingWindow extends JFrame {
 
         addGlobalConfigPage();
         addPackageLeadingPage();
+        addUpdateSubscribePage();
 
         tabbedPane.setSelectedIndex(0);
         tabbedPane.addChangeListener(new ChangeListener() {
@@ -440,5 +442,25 @@ public class FloatingWindow extends JFrame {
                 e.printStackTrace();
             }
         }
+    }
+
+    void addUpdateSubscribePage() {
+        JPanel panel = new JPanel();
+
+        panel.setLayout(null);
+
+        JButton button = new JButton("更新订阅文件");
+        button.addActionListener(e -> {
+            entrylib.scl.load(entrylib);
+        });
+
+        int height = getPageHeight(3), width = getPageWidth(3);
+        int borderHeight = (height - 10) / 3, contentHeight = borderHeight - 2;
+        int borderWidth = (width - 20) / 3, contentWidth = borderWidth - 2;
+
+        button.setBounds(contentWidth, contentHeight, contentWidth, contentHeight);
+        panel.add(button);
+
+        tabbedPane.addTab("订阅更新", panel);
     }
 }

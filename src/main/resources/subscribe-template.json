@@ -1,0 +1,14 @@
+[
+  {
+    "url": "https://test.com/api/subscribe.json",
+    "target": 123456,
+    "period": 60,
+    "overwrite": 2
+  },
+  {
+    "url": "https://example.com/api/subscribe.json",
+    "target": 1234567,
+    "period": 30,
+    "overwrite": 1
+  }
+]

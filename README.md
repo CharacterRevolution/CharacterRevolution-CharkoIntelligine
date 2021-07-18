@@ -9,6 +9,7 @@ EntryLib 是一个基于 [Mirai-Console](https://github.com/mamoe/mirai-console)
 - [使用方法](#使用方法)
 - [基本指令列表](#基本指令列表)
 - [群分组](#群分组)
+- [订阅内容](#订阅内容)
 - [额外说明](#额外说明)
 - [配置项](#配置项)
 - [控制台](#控制台)
@@ -97,13 +98,28 @@ EntryLib 是一个基于 [Mirai-Console](https://github.com/mamoe/mirai-console)
 在配置好了群分组文件后，在同一分组内的所有群共享一个数据库
 
 可以通过编辑[配置项](#配置项)的`subgroup.json`文件，来配置群分组  
-这个文件的格式样例可以参考[这里](https://github.com/BillYang2016/entrylib/blob/main/src/main/resources/subgroup-template.json)  
+这个文件的格式样例可以参考[这里](https://github.com/BillYang2016/charkointelligine/blob/main/src/main/resources/subgroup-template.json)  
 群分组配置文件由键值对构成，键为分组名，值为群组列表（群号字符串列表）  
 ## 注意事项
 1. 群分组配置**不支持热加载**，仅在插件启动时从硬盘读取配置。这样设计是为了提高效率，可能会在未来进行优化
 2. 分组名不允许全为数字，原因请见[数据库结构](#数据库结构)
 3. 不允许同一个群同时存在于多个分组中
 4. 若群分组加载错误或失败，将在控制台发送错误信息，此时的群分组状态为空
+5. 一旦群被纳入分组，其以前的数据库仍然保留但暂不使用；一旦群被移出分组，将会沿用以前的数据库
+6. 若分组被删除，其对应的数据库并不会清空，需要手动删除
+
+# 订阅内容
+订阅内容使机器人可以定期从指定api获取词条内容，并更新进数据库  
+
+可以通过编辑[配置项](#配置项)的`subscribe.json`文件来配置订阅  
+这个文件的格式样例可以参考[这里](https://github.com/BillYang2016/charkointelligine/blob/main/src/main/resources/subscribe-template.json)  
+该文件由键值对列表组成：
+- `url`表示订阅地址，请保证这是一个api
+- `target`表示目标群号，订阅将更新进入该群数据库
+- `period`表示更新周期，以分钟为单位
+- `overwrite`表示是否覆写相同词条，可选项从数字0~2，与[词条库导入导出](#词条库导入导出)相同
+
+订阅的api需要提供与[词条库导入导出](#词条库导入导出)相同格式的json文本
 
 # 额外说明
 1. 本插件仅适用于群聊，且每个群聊独立拥有自己的词条库
@@ -151,6 +167,7 @@ EntryLib 是一个基于 [Mirai-Console](https://github.com/mamoe/mirai-console)
 在控制台中可以方便地进行如下操作：
 - 编辑全局配置
 - 词条库导入导出
+- 订阅加载更新
 
 ## 词条库导入导出
 导入导出会根据一个 json 文件进行，这个文件的格式样例可以参考[这里](https://github.com/BillYang2016/charkointelligine/blob/main/src/main/resources/datapackage-template.json)  

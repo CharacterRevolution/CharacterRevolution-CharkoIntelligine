@@ -26,7 +26,7 @@ public class Database {
      */
     public boolean init(String path) {
         RootPath = path;
-        File file = new File("data/EntryLib/databases/");
+        File file = new File("data/CharkoIntelligine/databases/");
         if(!file.exists()) {
             file.mkdirs();
         }
@@ -85,7 +85,7 @@ public class Database {
      * @return 连接情况
      */
     public boolean connect(long groupId) {
-        return connect("jdbc:sqlite:data/EntryLib/databases/" + groupId + ".db");
+        return connect("jdbc:sqlite:data/CharkoIntelligine/databases/" + groupId + ".db");
     }
 
     /**
@@ -95,7 +95,7 @@ public class Database {
      * @see Subgroup
      */
     public boolean connect(Subgroup subgroup) {
-        return connect("jdbc:sqlite:data/EntryLib/databases/" + subgroup.getName() + ".db");
+        return connect("jdbc:sqlite:data/CharkoIntelligine/databases/" + subgroup.getName() + ".db");
     }
 
     /**

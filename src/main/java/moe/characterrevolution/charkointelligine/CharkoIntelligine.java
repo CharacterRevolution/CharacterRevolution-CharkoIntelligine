@@ -8,6 +8,7 @@ import moe.characterrevolution.charkointelligine.Matcher.MatchLoader;
 import moe.characterrevolution.charkointelligine.Matcher.MatchValue;
 import moe.characterrevolution.charkointelligine.Matcher.RegularReplace;
 import moe.characterrevolution.charkointelligine.MediaCoder.ImageProcessor;
+import moe.characterrevolution.charkointelligine.Subscribe.SubscribeLoader;
 import moe.characterrevolution.charkointelligine.ui.Tray;
 import moe.characterrevolution.charkointelligine.EntryPackage.PackageLoader;
 import moe.characterrevolution.charkointelligine.Subgroup.Subgroup;
@@ -46,6 +47,7 @@ public final class CharkoIntelligine extends JavaPlugin {
     public PackageLoader pl = new PackageLoader();
     Tray tray = new Tray();
     SubgroupLoader sgl = new SubgroupLoader();
+    public SubscribeLoader scl = new SubscribeLoader();
 
     /**
      * sendGroupMessage 方法向群发送一条消息
@@ -469,6 +471,7 @@ public final class CharkoIntelligine extends JavaPlugin {
         if(!sgl.load(DataFolderPath, ErrorInfo)) { //加载群分组
             getLogger().error(ErrorInfo.toString());
         }
+        scl.init(DataFolderPath, this);
 
         getLogger().info("词条插件已加载完成！");
 

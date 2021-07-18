@@ -8,4 +8,4 @@ pluginManagement {
     }
 }
 //这里是插件名
-rootProject.name = "mirai-entrylib"
+rootProject.name = "CharkoIntelligine"
