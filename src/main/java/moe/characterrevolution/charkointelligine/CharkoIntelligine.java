@@ -3,6 +3,7 @@ package moe.characterrevolution.charkointelligine;
 import moe.characterrevolution.charkointelligine.Config.EnableGroups;
 import moe.characterrevolution.charkointelligine.Config.UserIO;
 import moe.characterrevolution.charkointelligine.Database.Database;
+import moe.characterrevolution.charkointelligine.Database.DatabaseAutoArranger;
 import moe.characterrevolution.charkointelligine.Database.QueryValue;
 import moe.characterrevolution.charkointelligine.Matcher.MatchLoader;
 import moe.characterrevolution.charkointelligine.Matcher.MatchValue;
@@ -13,6 +14,7 @@ import moe.characterrevolution.charkointelligine.ui.Tray;
 import moe.characterrevolution.charkointelligine.EntryPackage.PackageLoader;
 import moe.characterrevolution.charkointelligine.Subgroup.Subgroup;
 import moe.characterrevolution.charkointelligine.Subgroup.SubgroupLoader;
+
 import net.mamoe.mirai.console.plugin.jvm.JavaPlugin;
 import net.mamoe.mirai.console.plugin.jvm.JvmPluginDescriptionBuilder;
 import net.mamoe.mirai.contact.MemberPermission;
@@ -23,6 +25,7 @@ import net.mamoe.mirai.message.data.*;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Timer;
 
 /**
  * 主类 CharkoIntelligine
@@ -32,21 +35,19 @@ import java.util.List;
 public final class CharkoIntelligine extends JavaPlugin {
     public static final CharkoIntelligine INSTANCE = new CharkoIntelligine();
     private CharkoIntelligine() {
-        super(new JvmPluginDescriptionBuilder("CharkoIntelligine", "1.0.3")
+        super(new JvmPluginDescriptionBuilder("CharkoIntelligine", "1.0.4")
                 .id("moe.characterrevolution.charkointelligine")
                 .info("Ask and replay plugin for Mirai-Console")
                 .author("Bill Yang")
                 .build());
     }
 
-    Database db = new Database();
-    public MatchLoader ml = new MatchLoader();
     public UserIO uio = new UserIO();
     public EnableGroups eg = new EnableGroups();
     ImageProcessor ip = new ImageProcessor();
     public PackageLoader pl = new PackageLoader();
     Tray tray = new Tray();
-    SubgroupLoader sgl = new SubgroupLoader();
+    public SubgroupLoader sgl = new SubgroupLoader();
     public SubscribeLoader scl = new SubscribeLoader();
 
     /**
@@ -94,6 +95,8 @@ public final class CharkoIntelligine extends JavaPlugin {
         StringBuilder ErrorInfo = new StringBuilder();
         boolean status;
 
+        Database db = new Database(); //新建数据库对象
+
         Subgroup subgroup = sgl.get(g.getGroup().getId());
         if(subgroup == null) status = db.insert(g.getGroup().getId(), title, content, type, ErrorInfo); //向数据库插入
         else status = db.insert(subgroup, title, content, type, ErrorInfo);
@@ -129,6 +132,7 @@ public final class CharkoIntelligine extends JavaPlugin {
             return;
         }
 
+        MatchLoader ml = new MatchLoader(); //新建匹配器对象
         MatchValue mv;
 
         Subgroup subgroup = sgl.get(g.getGroup().getId());
@@ -143,6 +147,8 @@ public final class CharkoIntelligine extends JavaPlugin {
         } else {
             StringBuilder ErrorInfo = new StringBuilder(); //错误信息
             String content;
+
+            Database db = new Database(); //新建数据库对象
 
             if(subgroup == null) content = db.query(g.getGroup().getId(), id, uio.getRandomReply(), ErrorInfo);
             else content = db.query(subgroup, id, uio.getRandomReply(), ErrorInfo);
@@ -193,6 +199,7 @@ public final class CharkoIntelligine extends JavaPlugin {
             return;
         }
 
+        MatchLoader ml = new MatchLoader(); //新建匹配器对象
         MatchValue mv;
 
         Subgroup subgroup = sgl.get(g.getGroup().getId());
@@ -207,6 +214,8 @@ public final class CharkoIntelligine extends JavaPlugin {
         } else {
             StringBuilder ErrorInfo = new StringBuilder(); //错误信息
             List<QueryValue> contentList;
+
+            Database db = new Database(); //新建数据库对象
 
             if(subgroup == null) contentList = db.history(g.getGroup().getId(), id, ErrorInfo); //获取列表
             else contentList = db.history(subgroup, id, ErrorInfo);
@@ -286,6 +295,8 @@ public final class CharkoIntelligine extends JavaPlugin {
             return;
         }
 
+        MatchLoader ml = new MatchLoader(); //新建匹配器对象
+
         List<MatchValue> list;
 
         Subgroup subgroup = sgl.get(g.getGroup().getId());
@@ -352,6 +363,8 @@ public final class CharkoIntelligine extends JavaPlugin {
             sendGroupMessage(g,"all", "permission");
             return;
         }
+
+        MatchLoader ml = new MatchLoader(); //新建匹配器对象
 
         List<MatchValue> list;
 
@@ -424,6 +437,8 @@ public final class CharkoIntelligine extends JavaPlugin {
             return;
         }
 
+        Database db = new Database(); //新建数据库对象
+
         StringBuilder ErrorInfo = new StringBuilder(); //错误信息
         boolean status;
 
@@ -457,21 +472,17 @@ public final class CharkoIntelligine extends JavaPlugin {
 
         StringBuilder ErrorInfo = new StringBuilder();
 
-        if(!db.init(DataFolderPath)) { //初始化数据库
-            getLogger().error("无法加载数据库，请检查数据库是否损坏？");
-            getLogger().error("插件无法正常运行，将停止加载。");
-            return;
-        }
-        ml.init(db); //初始化匹配器
         uio.init(this, DataFolderPath); //初始化用户交互
         eg.init(DataFolderPath, uio); //初始化群开关
         ip.init(DataFolderPath); //初始化图片处理器
-        pl.init(db); //加载词条导入导出工具
         tray.create(this); //创建托盘
         if(!sgl.load(DataFolderPath, ErrorInfo)) { //加载群分组
             getLogger().error(ErrorInfo.toString());
         }
         scl.init(DataFolderPath, this);
+
+        Timer timer = new Timer();
+        timer.schedule(new DatabaseAutoArranger(this), 5000, 24 * 60 * 60 * 1000); //每一天为周期整理一次数据库
 
         getLogger().info("词条插件已加载完成！");
 
@@ -594,7 +605,7 @@ public final class CharkoIntelligine extends JavaPlugin {
                     }
                 }
 
-                processSearch(g, splitedMsg[1],page);
+                processSearch(g, splitedMsg[1], page);
 
             } else if(command.equals("all")) { //搜索全部类命令
 

@@ -2,13 +2,13 @@ package moe.characterrevolution.charkointelligine.ui;
 
 import moe.characterrevolution.charkointelligine.Config.UserIO;
 import moe.characterrevolution.charkointelligine.CharkoIntelligine;
+import moe.characterrevolution.charkointelligine.Matcher.MatchLoader;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
@@ -116,6 +116,7 @@ public class FloatingWindow extends JFrame {
 
         addGlobalConfigPage();
         addPackageLeadingPage();
+        addUpdateSubgroupPage();
         addUpdateSubscribePage();
 
         tabbedPane.setSelectedIndex(0);
@@ -342,7 +343,7 @@ public class FloatingWindow extends JFrame {
                 );
             } else {
                 StringBuilder ErrorInfo = new StringBuilder();
-                if(entrylib.pl.leadOut(entrylib.ml, groupId, file, ErrorInfo)) {
+                if(entrylib.pl.leadOut(new MatchLoader(), groupId, file, ErrorInfo)) {
                     JOptionPane.showMessageDialog(
                             panel, "导出完成，已导出到 " + file.getAbsolutePath(), "成功", JOptionPane.INFORMATION_MESSAGE
                     );
@@ -444,6 +445,28 @@ public class FloatingWindow extends JFrame {
         }
     }
 
+    void addUpdateSubgroupPage() {
+        JPanel panel = new JPanel();
+
+        panel.setLayout(null);
+
+        JButton button = new JButton("更新分组配置");
+        button.addActionListener(e -> {
+            StringBuilder ErrorInfo = new StringBuilder();
+            if(!entrylib.sgl.load(entrylib.getDataFolder().getAbsolutePath(), ErrorInfo))JOptionPane.showMessageDialog(this, ErrorInfo.toString(),"更新失败", JOptionPane.ERROR_MESSAGE);
+            else JOptionPane.showMessageDialog(this,"更新完成！", "更新成功", JOptionPane.INFORMATION_MESSAGE);
+        });
+
+        int height = getPageHeight(3), width = getPageWidth(3);
+        int borderHeight = (height - 10) / 3, contentHeight = borderHeight - 2;
+        int borderWidth = (width - 20) / 3, contentWidth = borderWidth - 2;
+
+        button.setBounds(contentWidth, contentHeight, contentWidth, contentHeight);
+        panel.add(button);
+
+        tabbedPane.addTab("分组更新", panel);
+    }
+
     void addUpdateSubscribePage() {
         JPanel panel = new JPanel();
 
@@ -454,7 +477,7 @@ public class FloatingWindow extends JFrame {
             entrylib.scl.load(entrylib);
         });
 
-        int height = getPageHeight(3), width = getPageWidth(3);
+        int height = getPageHeight(4), width = getPageWidth(4);
         int borderHeight = (height - 10) / 3, contentHeight = borderHeight - 2;
         int borderWidth = (width - 20) / 3, contentWidth = borderWidth - 2;
 

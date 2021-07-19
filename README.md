@@ -1,6 +1,6 @@
 # CharkoIntelligine
 
-CharkoIntelligine 继承自 [EntryLib](https://github.com/BillYang2016/entrylib) 1.0.3 版本。  
+CharkoIntelligine 继承自 [EntryLib](https://github.com/BillYang2016/entrylib) 1.0.2 ~ 1.0.4 版本。  
 
 EntryLib 是一个基于 [Mirai-Console](https://github.com/mamoe/mirai-console) 的插件，用于实现群词条、自定义回复或更多功能。
 
@@ -101,7 +101,7 @@ EntryLib 是一个基于 [Mirai-Console](https://github.com/mamoe/mirai-console)
 这个文件的格式样例可以参考[这里](https://github.com/BillYang2016/charkointelligine/blob/main/src/main/resources/subgroup-template.json)  
 群分组配置文件由键值对构成，键为分组名，值为群组列表（群号字符串列表）  
 ## 注意事项
-1. 群分组配置**不支持热加载**，仅在插件启动时从硬盘读取配置。这样设计是为了提高效率，可能会在未来进行优化
+1. 群分组配置现已**支持热加载**，插件启动时从硬盘读取配置，也可以修改文件后从[控制台](#控制台)更新加载
 2. 分组名不允许全为数字，原因请见[数据库结构](#数据库结构)
 3. 不允许同一个群同时存在于多个分组中
 4. 若群分组加载错误或失败，将在控制台发送错误信息，此时的群分组状态为空
@@ -128,6 +128,8 @@ EntryLib 是一个基于 [Mirai-Console](https://github.com/mamoe/mirai-console)
 4. 如果将回复配置为空，插件将不会发送消息
 5. 拒绝以`__MAIN_TABLE`、开关指令、全部指令为词条名的修改与访问，插件将会检测并作出反馈
 6. 删除命令的默认权限为管理员以上才可使用，因为不同于更新为空，一旦词条被删除，它的所有历史备份均被删除，且不会再出现在搜索结果中
+7. 插件 24h 为周期执行一次数据库整理任务，目的是为了将数据库结构变得更方便管理。造成数据库需要整理的原因一般是删除了词条表造成编号不连续，或上次整理失败中途退出。整理状态会在控制台进行通知，请注意查看当前整理状态
+8. 为什么偶尔会造成更新操作失败？是因为数据库正在执行其他工作，因此受到了并发性限制。该问题发生概率很低，一般重试一次即可解决。若数据库长时间被占用，会出现一直无法执行更新的现象，若发生需要请发送 [Issues](https://github.com/BillYang2016/entrylib/issues) 反馈
 
 # 配置项
 配置项位于`Mirai\data\charkointelligine\`文件夹中
@@ -167,6 +169,7 @@ EntryLib 是一个基于 [Mirai-Console](https://github.com/mamoe/mirai-console)
 在控制台中可以方便地进行如下操作：
 - 编辑全局配置
 - 词条库导入导出
+- 分组配置更新
 - 订阅加载更新
 
 ## 词条库导入导出
