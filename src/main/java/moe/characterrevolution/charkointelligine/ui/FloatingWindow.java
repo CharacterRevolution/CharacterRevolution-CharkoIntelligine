@@ -107,7 +107,7 @@ public class FloatingWindow extends JFrame {
             }
         }
 
-        setTitle("EntryLib 控制台");
+        setTitle("CharkoIntelligine 控制台");
         setSize(500, 380);
         setLocationRelativeTo(null); //居中
         setResizable(false);
@@ -374,7 +374,7 @@ public class FloatingWindow extends JFrame {
         JTextField textField2 = new JTextField();
         textField2.addKeyListener(new DigitOnlyKeyListener());
 
-        String[] list = new String[]{"不覆盖相同词条", "合并相同词条", "不覆盖相同词条"};
+        String[] list = new String[]{"不覆盖相同词条", "合并相同词条", "覆盖相同词条"};
         JComboBox<String> comboBox = new JComboBox<>(list);
         comboBox.setSelectedIndex(0);
 

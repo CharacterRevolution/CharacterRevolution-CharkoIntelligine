@@ -58,17 +58,15 @@ public class Tray {
 
                 MenuItem menu2 = new MenuItem("关于");
                 menu2.addActionListener(e -> JOptionPane.showMessageDialog(
-                        null, "EntryLib " + entrylib.getVersion() +
-                                "\nhttps://github.com/BillYang2016/entrylib" +
-                                "\n遵循 AGPL-3.0 协议开源" +
-                                "\n作者 Bill Yang" +
-                                "\n插件图标版权所有",
-                        "关于 EntryLib", JOptionPane.INFORMATION_MESSAGE
+                        null, "CharkoIntelligine " + entrylib.getVersion() +
+                                "\nhttps://github.com/BillYang2016/CharkoIntelligine" +
+                                "\n初版作者 Bill Yang",
+                        "关于 CharkoIntelligine", JOptionPane.INFORMATION_MESSAGE
                 ));
 
                 pop.add(menu2);
 
-                tray = new TrayIcon(ImageIO.read(is), "EntryLib 菜单", pop);
+                tray = new TrayIcon(ImageIO.read(is), "CharkoIntelligine 菜单", pop);
                 tray.setImageAutoSize(true);
                 tray.addMouseListener(new MouseAdapter() {
                     @Override
