@@ -45,7 +45,7 @@ class DigitOnlyKeyListener implements KeyListener {
  */
 public class FloatingWindow extends JFrame {
 
-    CharkoIntelligine entrylib;
+    CharkoIntelligine charkointelligine;
     UserIO uio;
 
     JTabbedPane tabbedPane = new JTabbedPane();
@@ -91,14 +91,14 @@ public class FloatingWindow extends JFrame {
      * 构造函数
      * 创建一个新的悬浮窗对象
      * 一般由 Tray 类创建时发起
-     * @param entrylib 传递主类提供资源信息
+     * @param charkointelligine 传递主类提供资源信息
      * @see Tray
      */
-    public FloatingWindow(CharkoIntelligine entrylib) {
-        this.entrylib = entrylib;
-        uio = entrylib.uio;
+    public FloatingWindow(CharkoIntelligine charkointelligine) {
+        this.charkointelligine = charkointelligine;
+        uio = charkointelligine.uio;
 
-        InputStream is = entrylib.getResourceAsStream("icon.jpg");
+        InputStream is = charkointelligine.getResourceAsStream("icon.jpg");
         if(is != null) {
             try {
                 setIconImage(ImageIO.read(is));
@@ -296,9 +296,9 @@ public class FloatingWindow extends JFrame {
         panel.add(label3);
         panel.add(textField3);
 
-        InputStream is = entrylib.getResourceAsStream("gear.jpg"); //添加图标
+        InputStream is = charkointelligine.getResourceAsStream("gear.jpg"); //添加图标
         if(is == null) {
-            entrylib.getLogger().warning("未找到资源文件gear.jpg");
+            charkointelligine.getLogger().warning("未找到资源文件gear.jpg");
 
             tabbedPane.addTab("全局配置", panel);
         } else {
@@ -327,7 +327,7 @@ public class FloatingWindow extends JFrame {
 
         JButton button1 = new JButton("导出词条库");
         button1.addActionListener(e -> {
-            File file = new File(entrylib.getDataFolder().getAbsolutePath(), "entry-package.json");
+            File file = new File(charkointelligine.getDataFolder().getAbsolutePath(), "entry-package.json");
             long groupId;
 
             try {
@@ -336,14 +336,14 @@ public class FloatingWindow extends JFrame {
                 groupId = 0;
             }
 
-            File database = new File("data/EntryLib/databases/", groupId + ".db");
+            File database = new File("data/CharkoIntelligine/databases/", groupId + ".db");
             if(!database.exists()) {
                 JOptionPane.showMessageDialog(
                         panel, "目标群数据库不存在", "错误", JOptionPane.ERROR_MESSAGE
                 );
             } else {
                 StringBuilder ErrorInfo = new StringBuilder();
-                if(entrylib.pl.leadOut(new MatchLoader(), groupId, file, ErrorInfo)) {
+                if(charkointelligine.pl.leadOut(new MatchLoader(), groupId, file, ErrorInfo)) {
                     JOptionPane.showMessageDialog(
                             panel, "导出完成，已导出到 " + file.getAbsolutePath(), "成功", JOptionPane.INFORMATION_MESSAGE
                     );
@@ -403,7 +403,7 @@ public class FloatingWindow extends JFrame {
                 if(result == JFileChooser.APPROVE_OPTION) { //点击了确定
                     File file = fileChooser.getSelectedFile();
                     StringBuilder ErrorInfo = new StringBuilder();
-                    if(entrylib.pl.leadIn(groupId, file, comboBox.getSelectedIndex(), ErrorInfo)) {
+                    if(charkointelligine.pl.leadIn(groupId, file, comboBox.getSelectedIndex(), ErrorInfo)) {
                         JOptionPane.showMessageDialog(
                                 panel, "导入完成！", "成功", JOptionPane.INFORMATION_MESSAGE
                         );
@@ -429,9 +429,9 @@ public class FloatingWindow extends JFrame {
         panel.add(comboBox);
         panel.add(button2);
 
-        InputStream is = entrylib.getResourceAsStream("file.jpg"); //添加图标
+        InputStream is = charkointelligine.getResourceAsStream("file.jpg"); //添加图标
         if(is == null) {
-            entrylib.getLogger().warning("未找到资源文件file.jpg");
+            charkointelligine.getLogger().warning("未找到资源文件file.jpg");
 
             tabbedPane.addTab("词条库导入导出", panel);
         } else {
@@ -453,7 +453,7 @@ public class FloatingWindow extends JFrame {
         JButton button = new JButton("更新分组配置");
         button.addActionListener(e -> {
             StringBuilder ErrorInfo = new StringBuilder();
-            if(!entrylib.sgl.load(entrylib.getDataFolder().getAbsolutePath(), ErrorInfo))JOptionPane.showMessageDialog(this, ErrorInfo.toString(),"更新失败", JOptionPane.ERROR_MESSAGE);
+            if(!charkointelligine.sgl.load(charkointelligine.getDataFolder().getAbsolutePath(), ErrorInfo))JOptionPane.showMessageDialog(this, ErrorInfo.toString(),"更新失败", JOptionPane.ERROR_MESSAGE);
             else JOptionPane.showMessageDialog(this,"更新完成！", "更新成功", JOptionPane.INFORMATION_MESSAGE);
         });
 
@@ -474,7 +474,7 @@ public class FloatingWindow extends JFrame {
 
         JButton button = new JButton("更新订阅文件");
         button.addActionListener(e -> {
-            entrylib.scl.load(entrylib);
+            charkointelligine.scl.load(charkointelligine);
         });
 
         int height = getPageHeight(4), width = getPageWidth(4);

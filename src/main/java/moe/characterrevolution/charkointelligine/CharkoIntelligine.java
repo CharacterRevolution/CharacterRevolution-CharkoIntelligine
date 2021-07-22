@@ -454,7 +454,7 @@ public final class CharkoIntelligine extends JavaPlugin {
     }
 
     /**
-     * 获取 EntryLib 插件版本
+     * 获取 CharkoIntelligine 插件版本
      * @return 返回版本号
      */
     public String getVersion() {

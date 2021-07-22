@@ -17,31 +17,31 @@ import java.io.InputStream;
  */
 public class Tray {
 
-    CharkoIntelligine entrylib;
+    CharkoIntelligine charkointelligine;
     private TrayIcon tray = null;
     FloatingWindow fw = null;
 
     /**
      * 创建系统托盘与控制台悬浮窗（默认隐藏）
-     * @param entrylib 传递主类提供资源信息
+     * @param charkointelligine 传递主类提供资源信息
      * @see FloatingWindow
      */
-    public void create(CharkoIntelligine entrylib) {
-        this.entrylib = entrylib;
+    public void create(CharkoIntelligine charkointelligine) {
+        this.charkointelligine = charkointelligine;
 
         if(GraphicsEnvironment.isHeadless()) {
-            entrylib.getLogger().warning("无图形环境，停止图形界面加载");
+            charkointelligine.getLogger().warning("无图形环境，停止图形界面加载");
             return;
         }
 
-        fw = new FloatingWindow(entrylib);
+        fw = new FloatingWindow(charkointelligine);
 
         if(!SystemTray.isSupported()) {
-            entrylib.getLogger().warning("系统不支持托盘");
+            charkointelligine.getLogger().warning("系统不支持托盘");
             return;
         }
 
-        InputStream is = entrylib.getResourceAsStream("icon.jpg");
+        InputStream is = charkointelligine.getResourceAsStream("icon.jpg");
 
         if(is != null) {
             try {
@@ -58,7 +58,7 @@ public class Tray {
 
                 MenuItem menu2 = new MenuItem("关于");
                 menu2.addActionListener(e -> JOptionPane.showMessageDialog(
-                        null, "CharkoIntelligine " + entrylib.getVersion() +
+                        null, "CharkoIntelligine " + charkointelligine.getVersion() +
                                 "\nhttps://github.com/BillYang2016/CharkoIntelligine" +
                                 "\n初版作者 Bill Yang",
                         "关于 CharkoIntelligine", JOptionPane.INFORMATION_MESSAGE
@@ -82,7 +82,7 @@ public class Tray {
             } catch (IOException | AWTException e) {
                 e.printStackTrace();
             }
-        } else entrylib.getLogger().error("未找到资源文件icon.jpg，无法生成控制台");
+        } else charkointelligine.getLogger().error("未找到资源文件icon.jpg，无法生成控制台");
     }
 
     /**

@@ -15,16 +15,16 @@ import java.util.concurrent.TimeUnit;
  */
 public class DatabaseAutoArranger extends TimerTask {
 
-    CharkoIntelligine entrylib;
+    CharkoIntelligine charkointelligine;
     Connection c;
     Statement stmt;
 
     /**
      * 构造函数
-     * @param entrylib 传递主类
+     * @param charkointelligine 传递主类
      */
-    public DatabaseAutoArranger(CharkoIntelligine entrylib) {
-        this.entrylib = entrylib;
+    public DatabaseAutoArranger(CharkoIntelligine charkointelligine) {
+        this.charkointelligine = charkointelligine;
     }
 
     /**
@@ -50,7 +50,7 @@ public class DatabaseAutoArranger extends TimerTask {
     boolean connect(String database) {
         try {
             Class.forName("org.sqlite.JDBC");
-            c = DriverManager.getConnection("jdbc:sqlite:data/EntryLib/databases/" + database);
+            c = DriverManager.getConnection("jdbc:sqlite:data/CharkoIntelligine/databases/" + database);
 
             stmt = c.createStatement();
             if(!exists(stmt, "__MAIN_TABLE")) return false;
@@ -127,7 +127,7 @@ public class DatabaseAutoArranger extends TimerTask {
                         success = true;
                         break;
                     } catch (SQLException e) {
-                        entrylib.getLogger().error("无法删除游离表表" + table + "，五秒后重试！（" + i + "/5）");
+                        charkointelligine.getLogger().error("无法删除游离表表" + table + "，五秒后重试！（" + i + "/5）");
                         e.printStackTrace();
 
                         try {
@@ -139,7 +139,7 @@ public class DatabaseAutoArranger extends TimerTask {
                 }
 
                 if(!success) {
-                    entrylib.getLogger().error("无法完成" + fileName + "数据库整理工作，即将退出！");
+                    charkointelligine.getLogger().error("无法完成" + fileName + "数据库整理工作，即将退出！");
                     return false;
                 }
             }
@@ -165,7 +165,7 @@ public class DatabaseAutoArranger extends TimerTask {
                     success = true;
                     break;
                 } catch (SQLException e) {
-                    entrylib.getLogger().error("无法创建新表" + newTable + "，五秒后重试！（" + i + "/5）");
+                    charkointelligine.getLogger().error("无法创建新表" + newTable + "，五秒后重试！（" + i + "/5）");
                     e.printStackTrace();
 
                     try {
@@ -177,7 +177,7 @@ public class DatabaseAutoArranger extends TimerTask {
             }
 
             if(!success) {
-                entrylib.getLogger().error("无法完成" + fileName + "数据库整理工作，即将退出！");
+                charkointelligine.getLogger().error("无法完成" + fileName + "数据库整理工作，即将退出！");
                 return false;
             }
             success = false;
@@ -189,7 +189,7 @@ public class DatabaseAutoArranger extends TimerTask {
                     success = true;
                     break;
                 } catch (SQLException e) {
-                    entrylib.getLogger().error("无法创建修改主表关于id" + id + "的索引，五秒后重试！（" + i + "/5）");
+                    charkointelligine.getLogger().error("无法创建修改主表关于id" + id + "的索引，五秒后重试！（" + i + "/5）");
                     e.printStackTrace();
 
                     try {
@@ -201,7 +201,7 @@ public class DatabaseAutoArranger extends TimerTask {
             }
 
             if(!success) {
-                entrylib.getLogger().error("无法完成" + fileName + "数据库整理工作，即将退出！");
+                charkointelligine.getLogger().error("无法完成" + fileName + "数据库整理工作，即将退出！");
                 return false;
             }
             success = false;
@@ -213,7 +213,7 @@ public class DatabaseAutoArranger extends TimerTask {
                     success = true;
                     break;
                 } catch (SQLException e) {
-                    entrylib.getLogger().error("无法删除原表" + oldTable + "，五秒后重试！（" + i + "/5）");
+                    charkointelligine.getLogger().error("无法删除原表" + oldTable + "，五秒后重试！（" + i + "/5）");
                     e.printStackTrace();
 
                     try {
@@ -225,7 +225,7 @@ public class DatabaseAutoArranger extends TimerTask {
             }
 
             if(!success) {
-                entrylib.getLogger().error("无法完成" + fileName + "数据库整理工作，即将退出！");
+                charkointelligine.getLogger().error("无法完成" + fileName + "数据库整理工作，即将退出！");
                 return false;
             }
 
@@ -240,14 +240,14 @@ public class DatabaseAutoArranger extends TimerTask {
      */
     @Override
     public void run() {
-        File file = new File("data/EntryLib/databases/");
+        File file = new File("data/CharkoIntelligine/databases/");
         if(!file.exists()) return;
 
         File[] files = file.listFiles();
 
         if(files == null) return;
 
-        entrylib.getLogger().info("数据库整理器开始执行整理任务");
+        charkointelligine.getLogger().info("数据库整理器开始执行整理任务");
 
         for(File dbFile: files) {
             if(dbFile.isDirectory()) continue;
@@ -255,18 +255,18 @@ public class DatabaseAutoArranger extends TimerTask {
             String fileName = dbFile.getName();
             if(!fileName.endsWith(".db")) continue; //保证文件是数据库文件
 
-            entrylib.getLogger().info("开始整理数据库" + fileName);
+            charkointelligine.getLogger().info("开始整理数据库" + fileName);
 
             if(!connect(fileName)) {
-                entrylib.getLogger().warning("无法整理数据库" + fileName + "：数据库连接失败！");
+                charkointelligine.getLogger().warning("无法整理数据库" + fileName + "：数据库连接失败！");
                 continue;
             }
 
-            if(rearrange(fileName))entrylib.getLogger().info("数据库" + fileName + "整理完成");
+            if(rearrange(fileName))charkointelligine.getLogger().info("数据库" + fileName + "整理完成");
 
             close();
         }
 
-        entrylib.getLogger().info("数据库整理器已完成所有整理任务");
+        charkointelligine.getLogger().info("数据库整理器已完成所有整理任务");
     }
 }
