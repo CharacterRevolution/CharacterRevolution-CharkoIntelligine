@@ -1,6 +1,6 @@
 # CharkoIntelligine
 
-CharkoIntelligine 继承自 [EntryLib](https://github.com/BillYang2016/entrylib) 1.0.2 ~ 1.0.4 版本。  
+CharkoIntelligine 继承自 [EntryLib](https://github.com/BillYang2016/entrylib) 1.0.2 ~ 1.0.5 版本。  
 
 EntryLib 是一个基于 [Mirai-Console](https://github.com/mamoe/mirai-console) 的插件，用于实现群词条、自定义回复或更多功能。
 
@@ -117,7 +117,6 @@ EntryLib 是一个基于 [Mirai-Console](https://github.com/mamoe/mirai-console)
 - `url`表示订阅地址，请保证这是一个api
 - `target`表示目标群号，订阅将更新进入该群数据库
 - `period`表示更新周期，以分钟为单位
-- `overwrite`表示是否覆写相同词条，可选项从数字0~2，与[词条库导入导出](#词条库导入导出)相同
 
 订阅的api需要提供与[词条库导入导出](#词条库导入导出)相同格式的json文本
 
@@ -129,10 +128,11 @@ EntryLib 是一个基于 [Mirai-Console](https://github.com/mamoe/mirai-console)
 5. 拒绝以`__MAIN_TABLE`、开关指令、全部指令为词条名的修改与访问，插件将会检测并作出反馈
 6. 删除命令的默认权限为管理员以上才可使用，因为不同于更新为空，一旦词条被删除，它的所有历史备份均被删除，且不会再出现在搜索结果中
 7. 插件 24h 为周期执行一次数据库整理任务，目的是为了将数据库结构变得更方便管理。造成数据库需要整理的原因一般是删除了词条表造成编号不连续，或上次整理失败中途退出。整理状态会在控制台进行通知，请注意查看当前整理状态
-8. 为什么偶尔会造成更新操作失败？是因为数据库正在执行其他工作，因此受到了并发性限制。该问题发生概率很低，一般重试一次即可解决。若数据库长时间被占用，会出现一直无法执行更新的现象，若发生需要请发送 [Issues](https://github.com/BillYang2016/entrylib/issues) 反馈
+8. 在插件周期执行数据库整理任务时，同时也会清理未使用的缓存的图片文件
+9. 为什么偶尔会造成更新操作失败？是因为数据库正在执行其他工作，因此受到了并发性限制。该问题发生概率很低，一般重试一次即可解决。若数据库长时间被占用，会出现一直无法执行更新的现象，若发生需要请发送 [Issues](https://github.com/BillYang2016/entrylib/issues) 反馈
 
 # 配置项
-配置项位于`Mirai\data\charkointelligine\`文件夹中
+配置项位于`Mirai\data\CharkoIntelligine\`文件夹中
 
 ## `global.json`
 本配置项提供对插件全局的控制，包含以下项目：
@@ -175,10 +175,7 @@ EntryLib 是一个基于 [Mirai-Console](https://github.com/mamoe/mirai-console)
 ## 词条库导入导出
 导入导出会根据一个 json 文件进行，这个文件的格式样例可以参考[这里](https://github.com/BillYang2016/charkointelligine/blob/main/src/main/resources/datapackage-template.json)  
 导出时将会生成上述格式的 json 文件  
-导入时需要提供上述格式的 json 文件，同时可以选择三种覆盖方式：
-1. 不覆盖相同词条
-2. 合并相同词条
-3. 覆盖相同词条
+导入时采用删除数据库并整体重新导入的覆盖方式
 
 # 数据库结构
 插件采用 sqlite 作为数据库  
