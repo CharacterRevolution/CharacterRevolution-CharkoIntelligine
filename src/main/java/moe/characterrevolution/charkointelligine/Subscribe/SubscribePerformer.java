@@ -34,7 +34,7 @@ public class SubscribePerformer extends TimerTask {
     /**
      * 定时任务
      * 从url获取订阅内容，更新至目标数据库
-     * @see moe.characterrevolution.charkointelligine.EntryPackage.PackageLoader#leadIn(long, File, int, StringBuilder) 
+     * @see moe.characterrevolution.charkointelligine.EntryPackage.PackageLoader#leadIn(long, File, StringBuilder)
      */
     @Override
     public void run() {
