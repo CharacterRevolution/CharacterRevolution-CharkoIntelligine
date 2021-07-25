@@ -162,13 +162,6 @@ public class UserIO {
     public boolean getViewMode() {return getGlobalConfig("view-mode").equals("1");}
 
     /**
-     * 获取随机版本回复模式
-     * @return 是否随机版本回复
-     * @see #getGlobalConfig(String)
-     */
-    public boolean getRandomReply() {return getGlobalConfig("random-reply").equals("1");}
-
-    /**
      * 获取默认开关
      * @return 默认开关
      * @see #getGlobalConfig(String)
@@ -198,6 +191,7 @@ public class UserIO {
 
     /**
      * 获取历史命令权限
+     * @deprecated 由于不再处理历史指令，对此方法进行过时标记
      * @return 历史命令权限
      * @see #getGlobalConfig(String)
      */
@@ -233,6 +227,7 @@ public class UserIO {
 
     /**
      * 获取历史命令最多回复项数
+     * @deprecated 由于不再处理历史指令，对此方法进行过时标记
      * @return 历史命令最多回复项数
      * @see #getGlobalConfig(String)
      */
@@ -244,6 +239,13 @@ public class UserIO {
      * @see #getGlobalConfig(String)
      */
     public int getSearchMaxHeight() {return Integer.parseInt(getGlobalConfig("search-max-height"));}
+
+    /**
+     * 获取后台模式开启模式（是否禁止群聊一切除查看外的指令，具有最高优先度）
+     * @return 是否开启
+     * @see #getGlobalConfig(String)
+     */
+    public boolean getBackstageOnlyMode() {return getGlobalConfig("backstage-only-mode").equals("1");}
 
     /**
      * 获取回复方式

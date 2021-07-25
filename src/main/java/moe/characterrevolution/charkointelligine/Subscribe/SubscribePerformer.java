@@ -72,7 +72,7 @@ public class SubscribePerformer extends TimerTask {
 
             StringBuilder ErrorInfo = new StringBuilder();
 
-            if(!charkoIntelligine.pl.leadIn(subscribe.getGroupId(), file, subscribe.getOverwrite(), ErrorInfo)) { //调用导入函数
+            if(!charkoIntelligine.pl.leadIn(subscribe.getGroupId(), file, ErrorInfo)) { //调用导入函数
                 charkoIntelligine.getLogger().error("更新订阅" + subscribe.getUrl() + "至群" + subscribe.getGroupId() + "出错了！\n" + ErrorInfo.toString());
             } else {
                 charkoIntelligine.getLogger().info("更新订阅完成：" + subscribe.getUrl());

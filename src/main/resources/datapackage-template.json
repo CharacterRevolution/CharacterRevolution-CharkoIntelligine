@@ -2,7 +2,7 @@
   {
     "title": "title_1",
     "mode": 0,
-    "history": [
+    "random": [
       {
         "id": 1,
         "content": "content_1",
@@ -18,7 +18,7 @@
   {
     "title": "title_2",
     "mode": 1,
-    "history": [
+    "random": [
       {
         "id": 1,
         "content": "content_1",

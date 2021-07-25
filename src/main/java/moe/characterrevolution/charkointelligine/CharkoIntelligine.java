@@ -35,7 +35,7 @@ import java.util.Timer;
 public final class CharkoIntelligine extends JavaPlugin {
     public static final CharkoIntelligine INSTANCE = new CharkoIntelligine();
     private CharkoIntelligine() {
-        super(new JvmPluginDescriptionBuilder("CharkoIntelligine", "1.0.4")
+        super(new JvmPluginDescriptionBuilder("CharkoIntelligine", "1.0.5")
                 .id("moe.characterrevolution.charkointelligine")
                 .info("Ask and replay plugin for Mirai-Console")
                 .author("Bill Yang")
@@ -119,7 +119,7 @@ public final class CharkoIntelligine extends JavaPlugin {
      * @param cancelError 是否取消错误反馈
      * @see #sendGroupMessage(GroupMessageEvent, String, String, String...)
      * @see MatchLoader#match(long, String) 
-     * @see Database#query(long, int, boolean, StringBuilder)
+     * @see Database#query(long, int, StringBuilder)
      */
     void processView(GroupMessageEvent g, String title, boolean cancelError) {
         if(!Security.checkTitle(uio, title)) {
@@ -150,8 +150,8 @@ public final class CharkoIntelligine extends JavaPlugin {
 
             Database db = new Database(); //新建数据库对象
 
-            if(subgroup == null) content = db.query(g.getGroup().getId(), id, uio.getRandomReply(), ErrorInfo);
-            else content = db.query(subgroup, id, uio.getRandomReply(), ErrorInfo);
+            if(subgroup == null) content = db.query(g.getGroup().getId(), id, ErrorInfo);
+            else content = db.query(subgroup, id, ErrorInfo);
 
             if(content == null) {
                 if(!cancelError) {
@@ -181,6 +181,7 @@ public final class CharkoIntelligine extends JavaPlugin {
      * 通过匹配器获得匹配的词条ID
      * 从数据库查询ID词条历史内容并发送到群中
      * 根据 page 决定发送的项以缩减内容长度
+     * @deprecated 由于不再处理历史指令，对此方法进行过时标记
      * @param g 正在被处理的消息事件
      * @param title 查询词条名
      * @param page 查询的页数/页码
@@ -493,7 +494,9 @@ public final class CharkoIntelligine extends JavaPlugin {
 
             String command = uio.parse(g.getMessage().contentToString()); //全局指令解析
 
-            if(command != null) {
+            boolean backstage = uio.getBackstageOnlyMode();
+
+            if(command != null && !backstage) {
                 if(!uio.getSwitchPermission() || g.getSender().getPermission() != MemberPermission.MEMBER) { //权限判断
                     if(command.equals("switch-on")) {
                         getLogger().info("Got Input Command: " + command);
@@ -513,7 +516,7 @@ public final class CharkoIntelligine extends JavaPlugin {
 
             if(!eg.check(g.getGroup().getId())) return; //开关未开启，不执行反馈
 
-            if(command != null && command.equals("all")) { //搜索全部类命令
+            if(command != null && command.equals("all") && !backstage) { //搜索全部类命令
                 getLogger().info("Got Input Command: " + command);
                 processAll(g, 1);
                 return;
@@ -553,6 +556,8 @@ public final class CharkoIntelligine extends JavaPlugin {
                 if(command != null) getLogger().info("Got Input Command: " + command);
             }
 
+            if(backstage) return; //后台模式启动，停止指令执行
+
             if(command == null) return; //无对应命令
             else if(command.equals("learn")) { //学习类命令
 
@@ -576,21 +581,6 @@ public final class CharkoIntelligine extends JavaPlugin {
             } else if(command.equals("view")) { //查看类命令
 
                 processView(g, splitedMsg[1],false);
-
-            } else if(command.equals("history")) { //历史类命令
-
-                int page = 1;
-
-                if(splitedMsg.length > 2) {
-                    try { //尝试转换为数字
-                        splitedMsg[2] = splitedMsg[2].trim();
-                        page = Integer.parseInt(splitedMsg[2]);
-                    } catch (Exception e) {
-                        page = 1; //转换失败
-                    }
-                }
-
-                processHistory(g, splitedMsg[1], page);
 
             } else if(command.equals("search")) { //搜索类命令
 

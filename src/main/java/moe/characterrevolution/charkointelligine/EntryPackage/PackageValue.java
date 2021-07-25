@@ -22,7 +22,7 @@ public class PackageValue {
     public int getMode() {return mode;}
     public void setMode(int mode) {this.mode = mode;}
 
-    @JSONField(name = "history", ordinal = 3)
+    @JSONField(name = "random", ordinal = 3)
     private List<QueryValue> history;
     public List<QueryValue> getHistory() {return history;}
     public void setHistory(List<QueryValue> history) {this.history = history;}

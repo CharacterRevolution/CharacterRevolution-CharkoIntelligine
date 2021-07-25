@@ -360,24 +360,21 @@ public class Database {
     }
 
     /**
-     * 查询词条的最新内容
+     * 查询词条的随机版本内容
      * 保证已连接数据库
      * 返回错误信息
      * @param id 词条id
-     * @param random 是否随机版本回复
      * @param ErrorInfo 传递错误信息
-     * @return 词条最新内容
+     * @return 词条随机版本内容
      */
-    public String query(int id, boolean random, StringBuilder ErrorInfo) {
+    public String query(int id, StringBuilder ErrorInfo) {
         if(c == null && stmt == null) return null;
 
         String table = "TABLE_" + id;
         int tableId = max_id(table);
 
-        if(random) {
-            Random rd = new Random();
-            tableId = rd.nextInt(tableId) + 1;
-        }
+        Random rd = new Random();
+        tableId = rd.nextInt(tableId) + 1; //随机版本
 
         try {
             String sql = "SELECT * FROM " + table + " WHERE ID=" + tableId + ";";
@@ -400,40 +397,38 @@ public class Database {
     }
 
     /**
-     * 连接群数据库，查询词条的最新内容
+     * 连接群数据库，查询词条的随机版本内容
      * 返回错误信息
      * @param groupId 群号
      * @param id 词条id
-     * @param random 是否随机版本回复
      * @param ErrorInfo 传递错误信息
-     * @return 词条最新内容
+     * @return 词条随机版本内容
      */
-    public String query(long groupId, int id, boolean random, StringBuilder ErrorInfo) {
+    public String query(long groupId, int id, StringBuilder ErrorInfo) {
         if(!connect(groupId)) {
             ErrorInfo.append("数据库连接失败！");
             return null;
         }
 
-        return query(id, random, ErrorInfo);
+        return query(id, ErrorInfo);
     }
 
     /**
-     * 连接群分组数据库，查询词条的最新内容
+     * 连接群分组数据库，查询词条的随机版本内容
      * 返回错误信息
      * @param subgroup 群分组
      * @param id 词条id
-     * @param random 是否随机版本回复
      * @param ErrorInfo 传递错误信息
-     * @return 词条最新内容
+     * @return 词条随机版本内容
      * @see Subgroup
      */
-    public String query(Subgroup subgroup, int id, boolean random, StringBuilder ErrorInfo) {
+    public String query(Subgroup subgroup, int id, StringBuilder ErrorInfo) {
         if(!connect(subgroup)) {
             ErrorInfo.append("数据库连接失败！");
             return null;
         }
 
-        return query(id, random, ErrorInfo);
+        return query(id, ErrorInfo);
     }
 
     /**

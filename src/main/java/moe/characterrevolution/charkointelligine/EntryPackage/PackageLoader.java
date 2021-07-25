@@ -38,11 +38,10 @@ public class PackageLoader {
      * 从文件导入词条至目标群数据库
      * @param groupId 目标群号
      * @param file 词条包文件
-     * @param overwrite 是否复写相同词条（0表示不覆写，1表示合并，2表示覆写）
      * @param ErrorInfo 传递错误信息
      * @return 导入状态
      */
-    public boolean leadIn(long groupId, File file, int overwrite, StringBuilder ErrorInfo) {
+    public boolean leadIn(long groupId, File file, StringBuilder ErrorInfo) {
         StringBuffer sb = UserIO.readFile(file);
         List<PackageValue> packageList;
 
@@ -55,28 +54,18 @@ public class PackageLoader {
         }
 
         for(PackageValue pv: packageList) {
+            File database = new File("data/CharkoIntelligine/databases/", groupId + ".db");
+
+            System.gc(); //需要垃圾回收，否则无法删除文件
+            database.getAbsoluteFile().delete(); //删除数据库
+
             if(!db.connect(groupId)) {
                 ErrorInfo.append("无法连接至数据库！");
                 return false;
             }
 
-            int id = db.find_id(pv.getTitle());
-            if(id > 0) { //词条已存在
-                db.close();
-                if(overwrite == 1) {
-                    for(QueryValue qv: pv.getHistory())db.insert(groupId, pv.getTitle(), qv.getContent(), pv.getMode(), ErrorInfo);
-                } else if(overwrite == 2) {
-                    db.delete(groupId, pv.getTitle(), ErrorInfo);
-                    for(QueryValue qv: pv.getHistory())db.insert(groupId, pv.getTitle(), qv.getContent(), pv.getMode(), ErrorInfo);
-                }
-            } else if(id == -3) {
-                db.close();
-                for(QueryValue qv: pv.getHistory())db.insert(groupId, pv.getTitle(), qv.getContent(), pv.getMode(), ErrorInfo);
-            } else {
-                db.close();
-                ErrorInfo.append("导入 ").append(pv.getTitle()).append(" 词条时出错啦！");
-                return false;
-            }
+            db.close();
+            for(QueryValue qv: pv.getHistory())db.insert(groupId, pv.getTitle(), qv.getContent(), pv.getMode(), ErrorInfo);
         }
 
         return true;
