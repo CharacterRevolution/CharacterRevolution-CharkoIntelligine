@@ -53,12 +53,12 @@ public class PackageLoader {
             return false;
         }
 
+        File database = new File("data/CharkoIntelligine/databases/", groupId + ".db");
+
+        System.gc(); //需要垃圾回收，否则无法删除文件
+        database.getAbsoluteFile().delete(); //删除数据库
+
         for(PackageValue pv: packageList) {
-            File database = new File("data/CharkoIntelligine/databases/", groupId + ".db");
-
-            System.gc(); //需要垃圾回收，否则无法删除文件
-            database.getAbsoluteFile().delete(); //删除数据库
-
             if(!db.connect(groupId)) {
                 ErrorInfo.append("无法连接至数据库！");
                 return false;
